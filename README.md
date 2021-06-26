@@ -1,3 +1,11 @@
+## Portfolio Optimization
+
+> Disclaimer: Past does not always repeat itself, we can just learn the wisom from it.
+
+This is a small experiment done with the help of very nice library [pyportfolioopt](https://pypi.org/project/pyportfolioopt) where we are trying to find a portfolio distribution with maximum sharpe ratio (return/risk) from past nifty index data([MPT](https://en.wikipedia.org/wiki/Modern_portfolio_theory)). And also explore the efficient frontier and where nifty index lie(blue triangle in graph) in terms of risk and reurns.
+
+
+
 ```python
 import pandas as pd
 from pypfopt import EfficientFrontier
@@ -10,6 +18,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import time
 from ipynb.fs.full.prepare import index_df, topk
+plt.rcParams['figure.dpi'] = 200
 ```
 
     split RELIANCE 1645.4 2.0112455690013444 818.1
@@ -230,6 +239,42 @@ index_df
 
 
 ```python
+topk.plot(y='WEIGHTAGE(%)', x='SYMBOL',  kind='bar', rot=60)
+```
+
+
+
+
+    <AxesSubplot:xlabel='SYMBOL'>
+
+
+
+
+    
+![png](output_3_1.png)
+    
+
+
+
+```python
+index_df.plot(y='HDFCBANK', kind='line', rot=60)
+```
+
+
+
+
+    <AxesSubplot:xlabel='Date'>
+
+
+
+
+    
+![png](output_4_1.png)
+    
+
+
+
+```python
 # index_df.plot(kind='line',y='LT',color='red')
 ```
 
@@ -296,7 +341,7 @@ ef
 
 
 
-    <pypfopt.efficient_frontier.efficient_frontier.EfficientFrontier at 0x105d92f70>
+    <pypfopt.efficient_frontier.efficient_frontier.EfficientFrontier at 0x132e8deb0>
 
 
 
@@ -355,13 +400,13 @@ ax.scatter(stds1, rets1, marker="^", c='b', s=200)
 
 
 
-    <matplotlib.collections.PathCollection at 0x131d37430>
+    <matplotlib.collections.PathCollection at 0x134fae190>
 
 
 
 
     
-![png](output_12_1.png)
+![png](output_14_1.png)
     
 
 
@@ -547,11 +592,6 @@ nifty * S
 
 
 ```python
-
-```
-
-
-```python
 topk["WEIGHTAGE(%)"]/sum(topk["WEIGHTAGE(%)"])
 ```
 
@@ -591,3 +631,34 @@ raw_weights
 
 
 
+
+```python
+plt.bar(list(raw_weights.keys()), raw_weights.values(), color='g')
+plt.xticks(rotation=60)
+```
+
+
+
+
+    ([0, 1, 2, 3, 4, 5, 6, 7, 8],
+     [Text(0, 0, ''),
+      Text(0, 0, ''),
+      Text(0, 0, ''),
+      Text(0, 0, ''),
+      Text(0, 0, ''),
+      Text(0, 0, ''),
+      Text(0, 0, ''),
+      Text(0, 0, ''),
+      Text(0, 0, '')])
+
+
+
+
+    
+![png](output_20_1.png)
+    
+
+## Leanings
+1. I always used to feel that index is safest and the most efficient bet(max sharpe ratio), because markets fill up all inefficiencies and are always self correcting, but this might not be always true.
+2. Index top 10 have still very good risk to reward ratio, hence a good investment choice among all passively managed vehicles.
+3. "Compounding is the eight wonder": Einstein
